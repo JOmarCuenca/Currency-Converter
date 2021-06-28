@@ -1,0 +1,2 @@
+Fixed UI, added Connectivity check and now can delete currencies added to the app previously.
+Created the Backend and the interface so the user can add currencies and update them in realtime using the backend.
