@@ -1,4 +1,4 @@
-import 'package:connectivity/connectivity.dart';
+import 'package:currency_converter/constants/constants.dart';
 import 'package:currency_converter/constants/secrets.dart';
 import 'package:currency_converter/models/Rate.dart';
 import 'package:currency_picker/currency_picker.dart';
@@ -9,8 +9,8 @@ import 'Singleton.dart';
 class APIService extends Singleton {
 
   late final String _mainUrl;
-  late final Dio _dio;
-  final Connectivity _connectivity = Connectivity();
+  // final Connectivity _connectivity = Connectivity();
+  final Dio _dio = new Dio();
 
   static final APIService _serviceInstance = APIService._internal();
 
@@ -22,23 +22,23 @@ class APIService extends Singleton {
 
   Future<void> _init() async {
     this._mainUrl = "http://data.fixer.io/api/latest?access_key=$API_KEY&symbols=";
-    this._dio = new Dio();
   }
 
   Future<double> _checkRate(String from, String to) async {
     final modifiedURL = "${this._mainUrl}$from,$to";
-    final result = await this._dio.get(modifiedURL);
+    final result = await this._dio.get(modifiedURL).timeout(Duration(milliseconds: 800), onTimeout: () => throw new Exception(ExceptionCodes.TimeoutError));
     if(result.statusCode != 200)
-      return -1;
+      throw new Exception(ExceptionCodes.ServerError);
     final resultingRates = Map<String,num>.from(result.data["rates"]).values;
     return resultingRates.last / resultingRates.first; // This should never break because there should always be only 2 values
   }
 
-  Future<bool> connected() async => (await this._connectivity.checkConnectivity()) != ConnectivityResult.none;
+  // Future<bool> connected() async => (await this._connectivity.checkConnectivity()) != ConnectivityResult.none;
 
   Future<Rate> getUpdatedRate(Rate r) async {
-    if(!(await this.connected()))
-      throw new Exception("There is no connectivity at the moment. The Updating operation for ${r.id} at ${DateTime.now().toIso8601String()} has been cancelled.");
+    // final connected = await this.connected();
+    // if(!connected)
+    //   throw new Exception("There is no connectivity at the moment. The Updating operation for ${r.id} at ${DateTime.now().toIso8601String()} has been cancelled.");
     return r.updateClone(await this._checkRate(r.fromCode, r.toCode));
   }
 

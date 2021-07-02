@@ -1,2 +1,7 @@
 Fixed UI, added Connectivity check and now can delete currencies added to the app previously.
 Created the Backend and the interface so the user can add currencies and update them in realtime using the backend.
+
+Date:   Thu Jul 1 20:27:30 2021 -0500
+
+    BugFix: Release Connectivity Error
+    Fixed UI for the Currency Picker Dialog

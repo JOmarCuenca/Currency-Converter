@@ -62,14 +62,7 @@ class DecisionDialog extends StatelessWidget {
   }
 
   Widget _buildBtn(BuildContext context, String text, bool result) => ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      primary: Color.fromRGBO(244, 85, 37, .8),
-      padding: EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        // side: BorderSide(color: Colors.red)
-      )
-    ),
+    style: BUTTON_STYLE,
     onPressed: () => Navigator.of(context).pop(result), 
     child: Text(text,
       style: TextStyle(

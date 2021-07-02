@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:currency_converter/constants/constants.dart';
 import 'package:currency_converter/controllers/ViewController.dart';
 import 'package:currency_converter/models/Dialogs/alert.dart';
 import 'package:currency_converter/models/Dialogs/currencyPicker.dart';
@@ -65,7 +66,11 @@ class HomeController extends ViewController {
       try{
         this._rates.add(await this._api.getUpdatedRate(newRate));
       } catch(e){
-        showMessage(context, message: "Please connect to some network to add this rate.");
+        if(e == ExceptionCodes.ServerError)
+          showMessage(context, message: "Request was denied by the service, please try again later");
+        else
+          showMessage(context, message: "Please make sure you are connected to a strong network before using the service.");
+        // showMessage(context, message: e.toString());
         if(kDebugMode) log(e.toString());
       }
       this.calculate();

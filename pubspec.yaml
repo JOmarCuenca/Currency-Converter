@@ -36,8 +36,9 @@ dependencies:
   flutter_spinkit: ^5.0.0
 
   # Networking Tools
+  # http: ^0.13.3
   dio: ^4.0.0
-  connectivity: ^3.0.6
+  # connectivity_plus: ^1.0.4
 
   # Currency Stuff
   currency_picker: ^2.0.4

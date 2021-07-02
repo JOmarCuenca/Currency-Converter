@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CurrencyPickerController extends ViewController {
 
-  static const String GENERIC_TEXT = "Pick a language";
+  static const String GENERIC_TEXT = "Pick a currency";
 
   Currency? _from, _to;
 
